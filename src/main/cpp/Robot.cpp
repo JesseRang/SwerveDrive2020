@@ -64,9 +64,9 @@ void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() 
 {
   /*update Swerve Math with Xbox controller inputs*/
-  swerveMath.updateWheelMatrix(driveController.GetRawAxis(0), driveController.GetRawAxis(1), driveController.GetRawAxis(3));
-  swerveMath.normalizeWheelSpeeds();
-  
+  //swerveMath.updateWheelMatrix(driveController.GetRawAxis(0), driveController.GetRawAxis(1), driveController.GetRawAxis(3));
+  //swerveMath.normalizeWheelSpeeds();
+  Robot::speeds = frc::ChassisSpeeds::fromFieldRelativeSpeeds(driveController.getY(kLeftHand), driveController.getX(kRightHand), driveController.getRawAxis(0));  //take in the controller inputs here
   
 
 }
