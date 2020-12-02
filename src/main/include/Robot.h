@@ -20,6 +20,7 @@
 #include "../include/SwerveMath.h"
 #include "../include/Talon.h"
 #include <rev/CANSparkMax.h>
+#define brushless rev::CANSparkMax::MotorType::kBrushless
 
 class Robot : public frc::TimedRobot {
   //set default PID coefficients
@@ -29,24 +30,25 @@ class Robot : public frc::TimedRobot {
   //set max motor RPM
   const double MaxRPM = 5700;
   /*swerve drive module locations*/
-  frc::Translation2d m_frontLeftLocation{0.381_m, 0.381_m};
-  frc::Translation2d m_frontRightLocation{0.381_m, -0.381_m};
-  frc::Translation2d m_backLeftLocation{-0.381_m, 0.381_m};
-  frc::Translation2d m_backRightLocation{-0.381_m, -0.381_m};
+
   /*Motors for going forwards and reverse*/
-  rev::CANSparkMax driveMotor{0, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax driveMotor{1, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax driveMotor{2, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax driveMotor{3, rev::CANSparkMax::MotorType::kBrushless};
+  
+  rev::CANSparkMax flMotor{0, brushless};
+  rev::CANPIDController flPidController = flMotor.GetPIDController();
+  rev::CANEncoder flEncoder = flMotor.GetEncoder();
+
+  rev::CANSparkMax frMotor{1, brushless};
+  rev::CANSparkMax blMotor{2, brushless};
+  rev::CANSparkMax brMotor{3, brushless};
   /*Motors for rotating the wheels*/
-  rev::CANSparkMax turnMotor{4, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax turnMotor{5, rev::CANSparkMax::MotorType::kBrushless}; 
-  rev::CANSparkMax turnMotor{6, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax turnMotor{7, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax frtMotor{4, brushless};
+  rev::CANSparkMax fltMotor{5, brushless}; 
+  rev::CANSparkMax brtMotor{6, brushless};
+  rev::CANSparkMax bltMotor{7, brushless};
 
 /*--------------------------------------------------------------*/
 /*Construct the SwerveMath object*/
-SwerveMath swerveMath;
+  SwerveMath swerveMath = SwerveMath();
 /*-------------------------------------------------------------*/
 
  public:
@@ -60,11 +62,12 @@ SwerveMath swerveMath;
   void DisabledPeriodic() override;
   void TestInit() override;
   void TestPeriodic() override;
-  /*creating kinematics swerve class*/
-  frc::SwerveDriveKinematics<4> m_kinematics{
-  m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
-  m_backRightLocation};
-  frc::ChassisSpeeds  speeds();
+
+  frc::SwerveModuleState frontLeftState{0_mps, frc::Rotation2d(0_deg)};
+  frc::SwerveModuleState frontRightState{0_mps, frc::Rotation2d(0_deg)};
+  frc::SwerveModuleState backLeftState{0_mps, frc::Rotation2d(0_deg)};
+  frc::SwerveModuleState backRightState{0_mps, frc::Rotation2d(0_deg)};
+
   /*Construct the Xbox or Joystick controller classes*/
   frc::Joystick driveController{0}; //0 is the port that the controller is at
 /*-------------------------------------------------------------*/

@@ -11,10 +11,13 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::RobotInit() {
+void Robot::RobotInit() 
+{
   m_chooser.SetDefaultOption(kAutoNameDefault, kAutoNameDefault);
   m_chooser.AddOption(kAutoNameCustom, kAutoNameCustom);
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+  
 }
 
 /**
@@ -66,7 +69,21 @@ void Robot::TeleopPeriodic()
   /*update Swerve Math with Xbox controller inputs*/
   //swerveMath.updateWheelMatrix(driveController.GetRawAxis(0), driveController.GetRawAxis(1), driveController.GetRawAxis(3));
   //swerveMath.normalizeWheelSpeeds();
-  Robot::speeds = frc::ChassisSpeeds::fromFieldRelativeSpeeds(driveController.getY(kLeftHand), driveController.getX(kRightHand), driveController.getRawAxis(0));  //take in the controller inputs here
+
+  //driver moves either of the joysticks then detect the input and recieve those values
+  if(Robot::driveController.GetRawAxis(1) > 0.05 || Robot::driveController.GetRawAxis(1) < -0.05|| 
+  Robot::driveController.GetRawAxis(2) > 0.05 || Robot::driveController.GetRawAxis(2) < -0.05|| 
+  Robot::driveController.GetRawAxis(3) > 0.05 || Robot::driveController.GetRawAxis(3) < -0.05)
+  {
+    Robot::swerveMath.updateWheelMatrix(Robot::driveController.GetRawAxis(1), Robot::driveController.GetRawAxis(2), Robot::driveController.GetRawAxis(3));
+    Robot::swerveMath.normalizeWheelSpeeds();
+
+
+  }
+  else
+  {
+    
+  }
   
 
 }
