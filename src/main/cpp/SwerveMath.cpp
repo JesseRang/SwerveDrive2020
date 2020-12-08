@@ -33,6 +33,8 @@ void SwerveMath::updateWheelMatrix(double Y_axis_left, double X_axis_left, doubl
     /*Wheel Back-Right*/
     this->WheelMatrix[3][0] = sqrt(pow(A,2) + pow(C,2));
     this->WheelMatrix[3][1] = atan2(A,C)*(180/M_PI);
+
+    this->normalizeWheelSpeeds();
 }
 
 void SwerveMath::normalizeWheelSpeeds()

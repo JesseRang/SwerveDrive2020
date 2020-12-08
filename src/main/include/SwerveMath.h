@@ -12,6 +12,7 @@ class SwerveMath
     double W;
     double R;
 
+
     public:
         double WheelMatrix[4][2]; //this will contain wheel speeds and wheel angles
         double A;
@@ -22,6 +23,10 @@ class SwerveMath
         SwerveMath();
         void updateWheelMatrix(double Y_axis_left, double X_axis_left, double rotation_axis_right); //updates wheel speeds and angles
         void normalizeWheelSpeeds();
+        double getL()
+        {
+            return this->L;
+        }
 
 };
 

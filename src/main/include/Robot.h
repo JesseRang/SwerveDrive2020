@@ -32,18 +32,35 @@ class Robot : public frc::TimedRobot {
   /*swerve drive module locations*/
 
   /*Motors for going forwards and reverse*/
-  
-  rev::CANSparkMax flMotor{0, brushless};
+
+  rev::CANSparkMAX flMotor{0, brushless};
   rev::CANPIDController flPidController = flMotor.GetPIDController();
   rev::CANEncoder flEncoder = flMotor.GetEncoder();
 
   rev::CANSparkMax frMotor{1, brushless};
+  rev::CANPIDController frPidController = frMotor.GetPIDController();
+  rev::CANEncoder frEncoder = frMotor.GetEncoder();
+
   rev::CANSparkMax blMotor{2, brushless};
+  rev::CANPIDController blPidController = blMotor.GetPIDController();
+  rev::CANEncoder blEncoder = blMotor.GetEncoder();
+
   rev::CANSparkMax brMotor{3, brushless};
+  rev::CANPIDController brPidController = brMotor.GetPIDController();
+  rev::CANEncoder brEncoder = brMotor.GetEncoder();
+
   /*Motors for rotating the wheels*/
   rev::CANSparkMax frtMotor{4, brushless};
-  rev::CANSparkMax fltMotor{5, brushless}; 
+  rev::CANPIDController frPidController = frMotor.GetPIDController();
+  rev::CANEncoder frEncoder = frMotor.GetEncoder();
+
+  rev::CANSparkMax fltMotor{5, brushless};
+  rev::CANPIDController fltPidController = fltMotor.GetPIDController();
+  rev::CANEncoder fltEncoder = flMotor.GetEncoder();
+
   rev::CANSparkMax brtMotor{6, brushless};
+  rev::CANPIDController brtPidController = bltMotor.GetPIDController();
+  rev::CANEncoder brtEncoder = brtMotor.GetEncoder();
   rev::CANSparkMax bltMotor{7, brushless};
 
 /*--------------------------------------------------------------*/
