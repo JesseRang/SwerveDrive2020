@@ -1,0 +1,83 @@
+See file:///C:/Users/zckas/Desktop/Test/SwerveBot/SwerveBot/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramDebugExecutableFrcUserProgramCpp.
+compiling SwerveModule.cpp failed.
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp: In member function 'frc::SwerveModuleState SwerveModule::GetState() const':
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:35:38: error: passing 'const rev::CANEncoder' as 'this' argument discards qualifiers [-fpermissive]
+   return {m_driveEncoder.GetVelocity(),frc::Rotation2d(units::radian_t(m_turningEncoder.GetPosition()))};
+                                      ^
+In file included from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\fbc54b1b30f38b5ad509aa0ee27cc0be\SparkMax-cpp-1.5.2-headers/rev/CANDigitalInput.h:32:0,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\fbc54b1b30f38b5ad509aa0ee27cc0be\SparkMax-cpp-1.5.2-headers/rev/CANSparkMax.h:37,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\include/SwerveModule.h:17,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:8:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\fbc54b1b30f38b5ad509aa0ee27cc0be\SparkMax-cpp-1.5.2-headers/rev/CANEncoder.h:97:12: note:   in call to 'double rev::CANEncoder::GetVelocity()'
+     double GetVelocity();
+            ^~~~~~~~~~~
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:35:101: error: passing 'const rev::CANEncoder' as 'this' argument discards qualifiers [-fpermissive]
+   return {m_driveEncoder.GetVelocity(),frc::Rotation2d(units::radian_t(m_turningEncoder.GetPosition()))};
+                                                                                                     ^
+In file included from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\fbc54b1b30f38b5ad509aa0ee27cc0be\SparkMax-cpp-1.5.2-headers/rev/CANDigitalInput.h:32:0,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\fbc54b1b30f38b5ad509aa0ee27cc0be\SparkMax-cpp-1.5.2-headers/rev/CANSparkMax.h:37,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\include/SwerveModule.h:17,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:8:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\fbc54b1b30f38b5ad509aa0ee27cc0be\SparkMax-cpp-1.5.2-headers/rev/CANEncoder.h:87:12: note:   in call to 'double rev::CANEncoder::GetPosition()'
+     double GetPosition();
+            ^~~~~~~~~~~
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:35:104: error: could not convert '{((const SwerveModule*)this)->SwerveModule::m_driveEncoder.rev::CANEncoder::GetVelocity(), frc::Rotation2d(units::unit_t<units::unit<std::ratio<1>, units::base_unit<std::ratio<0, 1>, std::ratio<0, 1>, std::ratio<0, 1>, std::ratio<1> > > >(((const SwerveModule*)this)->SwerveModule::m_turningEncoder.rev::CANEncoder::GetPosition()))}' from '<brace-enclosed initializer list>' to 'frc::SwerveModuleState'
+   return {m_driveEncoder.GetVelocity(),frc::Rotation2d(units::radian_t(m_turningEncoder.GetPosition()))};
+                                                                                                        ^
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp: In member function 'void SwerveModule::SetDesiredState(const frc::SwerveModuleState&)':
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:40:49: error: 'class rev::CANPIDController' has no member named 'setReference'; did you mean 'SetReference'?
+   const auto driveOutput = m_drivePIDController.setReference(state.speed.to<double>(), rev::ControlType::kVelocity);
+                                                 ^~~~~~~~~~~~
+                                                 SetReference
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:52:52: error: no matching function for call to 'units::unit_t<units::unit<std::ratio<1>, units::base_unit<std::ratio<2>, std::ratio<1>, std::ratio<-3>, std::ratio<0, 1>, std::ratio<-1> > > >::unit_t(<brace-enclosed initializer list>)'
+   m_driveMotor.SetVoltage(units::volt_t{driveOutput} + driveFeedforward);
+                                                    ^
+In file included from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/Timer.h:10:0,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/MotorSafety.h:14,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/PWM.h:15,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/PWMSpeedController.h:10,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/PWMVictorSPX.h:10,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\include/SwerveModule.h:11,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:8:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1955:20: note: candidate: template<class UnitsRhs, class Ty, template<class> class NlsRhs> constexpr units::unit_t<Units, T, NonLinearScale>::unit_t(const units::unit_t<UnitsRhs, Ty, NlsRhs>&)
+   inline constexpr unit_t(const unit_t<UnitsRhs, Ty, NlsRhs>& rhs) noexcept :
+                    ^~~~~~
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1955:20: note:   template argument deduction/substitution failed:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1943:20: note: candidate: template<class Rep, class Period, class> constexpr units::unit_t<Units, T, NonLinearScale>::unit_t(const std::chrono::duration<_Rep, _Period>&)
+   inline constexpr unit_t(const std::chrono::duration<Rep, Period>& value) noexcept :
+                    ^~~~~~
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1943:20: note:   template argument deduction/substitution failed:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1932:20: note: candidate: template<class Ty, class> constexpr units::unit_t<Units, T, NonLinearScale>::unit_t(Ty)
+   inline constexpr unit_t(const Ty value) noexcept : nls(value)
+                    ^~~~~~
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1932:20: note:   template argument deduction/substitution failed:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1921:29: note: candidate: template<class ... Args> constexpr units::unit_t<Units, T, NonLinearScale>::unit_t(T, const Args& ...)
+   inline explicit constexpr unit_t(const T value, const Args&... args) noexcept : nls(value, args...)
+                             ^~~~~~
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1921:29: note:   template argument deduction/substitution failed:
+C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:52:52: note:   cannot convert 'driveOutput' (type '<type error>') to type 'double'
+   m_driveMotor.SetVoltage(units::volt_t{driveOutput} + driveFeedforward);
+                                                    ^
+In file included from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/Timer.h:10:0,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/MotorSafety.h:14,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/PWM.h:15,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/PWMSpeedController.h:10,
+                 from C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\c8e850653c2afd60a8151f1bf737926e\wpilibc-cpp-2020.3.2-headers/frc/PWMVictorSPX.h:10,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\include/SwerveModule.h:11,
+                 from C:\Users\zckas\Desktop\Test\SwerveBot\SwerveBot\src\main\cpp\SwerveModule.cpp:8:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1910:13: note: candidate: units::unit_t<Units, T, NonLinearScale>::unit_t() [with Units = units::unit<std::ratio<1>, units::base_unit<std::ratio<2>, std::ratio<1>, std::ratio<-3>, std::ratio<0, 1>, std::ratio<-1> > >; T = double; NonLinearScale = units::linear_scale]
+   constexpr unit_t() = default;
+             ^~~~~~
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1910:13: note:   candidate expects 0 arguments, 1 provided
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1889:8: note: candidate: constexpr units::unit_t<units::unit<std::ratio<1>, units::base_unit<std::ratio<2>, std::ratio<1>, std::ratio<-3>, std::ratio<0, 1>, std::ratio<-1> > > >::unit_t(const units::unit_t<units::unit<std::ratio<1>, units::base_unit<std::ratio<2>, std::ratio<1>, std::ratio<-3>, std::ratio<0, 1>, std::ratio<-1> > > >&)
+  class unit_t : public NonLinearScale<T>, units::detail::_unit_t
+        ^~~~~~
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1889:8: note:   conversion of argument 1 would be ill-formed:
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1889:8: note: candidate: constexpr units::unit_t<units::unit<std::ratio<1>, units::base_unit<std::ratio<2>, std::ratio<1>, std::ratio<-3>, std::ratio<0, 1>, std::ratio<-1> > > >::unit_t(units::unit_t<units::unit<std::ratio<1>, units::base_unit<std::ratio<2>, std::ratio<1>, std::ratio<-3>, std::ratio<0, 1>, std::ratio<-1> > > >&&)
+C:\Users\zckas\.gradle\caches\transforms-2\files-2.1\d7b3e15668f704aa3914238843a0806f\wpiutil-cpp-2020.3.2-headers/units/units.h:1889:8: note:   conversion of argument 1 would be ill-formed:
+
+compiling Robot.cpp successful.
+
+compiling Drivetrain.cpp successful.
+
+Finished compileFrcUserProgramDebugExecutableFrcUserProgramCpp, see full log file:///C:/Users/zckas/Desktop/Test/SwerveBot/SwerveBot/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt.
