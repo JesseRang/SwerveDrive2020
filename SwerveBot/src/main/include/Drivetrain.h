@@ -12,6 +12,7 @@
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <wpi/math>
+#include <iostream>
 
 #include "SwerveModule.h"
 
@@ -36,15 +37,15 @@ class Drivetrain {
   void UpdateOdometry();
 
   static constexpr units::meters_per_second_t kMaxSpeed =
-      3.0_mps;  // 3 meters per second
+      1.0_mps;  // 3 meters per second
   static constexpr units::radians_per_second_t kMaxAngularSpeed{
       wpi::math::pi};  // 1/2 rotation per second
 
  private:
-  frc::Translation2d m_frontLeftLocation{+0.381_m, +0.381_m};
-  frc::Translation2d m_frontRightLocation{+0.381_m, -0.381_m};
-  frc::Translation2d m_backLeftLocation{-0.381_m, +0.381_m};
-  frc::Translation2d m_backRightLocation{-0.381_m, -0.381_m};
+  frc::Translation2d m_frontLeftLocation{+0.305_m, +0.305_m};
+  frc::Translation2d m_frontRightLocation{+0.305_m, -0.305_m};
+  frc::Translation2d m_backLeftLocation{-0.305_m, +0.305_m};
+  frc::Translation2d m_backRightLocation{-0.305_m, -0.305_m};
 
   SwerveModule m_frontLeft{1, 2};
   SwerveModule m_frontRight{3, 4};
