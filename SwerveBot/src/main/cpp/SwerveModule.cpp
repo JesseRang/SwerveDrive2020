@@ -9,14 +9,18 @@
 
 #include <frc/geometry/Rotation2d.h>
 #include <wpi/math>
+#include <frc/SmartDashboard/SmartDashboard.h>
+
+double kP = 6e-5, kI = 0/*1e-6*/, kD = 0, kIz = 0, kFF = 0/*0.000015*/, kMaxOutput = 1.0, kMinOutput = -1.0;
+
+
 
 SwerveModule::SwerveModule(const int driveMotorChannel,const int turningMotorChannel): m_driveMotor{driveMotorChannel, brushless}, m_turningMotor{turningMotorChannel, brushless} 
 {
   // Set the distance per pulse for the drive encoder. We can simply use the
   // distance traveled for one rotation of the wheel divided by the encoder
   // resolution.
-  m_driveEncoder.SetPositionConversionFactor(2 * wpi::math::pi * kWheelRadius /
-                                     kEncoderResolution);
+  m_driveEncoder.SetPositionConversionFactor(2 * wpi::math::pi * kWheelRadius / kEncoderResolution);
   //set position conversion factor might not be the correct function to use here, we need to test and see what the robot does with this before changing
 
   // Set the distance (in this case, angle) per pulse for the turning encoder.
@@ -26,29 +30,54 @@ SwerveModule::SwerveModule(const int driveMotorChannel,const int turningMotorCha
 
   // Limit the PID Controller's input range between -pi and pi and set the input
   // to be continuous.
-  m_turningPIDController.EnableContinuousInput(-units::radian_t(wpi::math::pi),
-                                               units::radian_t(wpi::math::pi));
+
+    frc::SmartDashboard::PutNumber("Drive P", kP);
+    frc::SmartDashboard::PutNumber("Drive I", kI);
+    frc::SmartDashboard::PutNumber("Drive D", kD);
+    frc::SmartDashboard::PutNumber("Drive kIz", kIz);
+    frc::SmartDashboard::PutNumber("Drive kFF", kFF);
+
+    //m_drivePIDController.SetP(frc::SmartDashboard::GetNumber("Drive P", kP));
+    //m_drivePIDController.SetI(frc::SmartDashboard::GetNumber("Drive I", 0)); //kI
+    //m_drivePIDController.SetD(frc::SmartDashboard::GetNumber("Drive D", 0)); //kD
+    //m_drivePIDController.SetIZone(frc::SmartDashboard::GetNumber("Drive kIz", 0)); //kIz
+    //m_drivePIDController.SetFF(frc::SmartDashboard::GetNumber("Drive kFF", 0)); //kFF
+    //m_drivePIDController.SetOutputRange(kMinOutput, kMaxOutput);
+
+    frc::SmartDashboard::PutNumber("Turn P", kP);
+    frc::SmartDashboard::PutNumber("Turn I", kI);
+    frc::SmartDashboard::PutNumber("Turn D", kD);
+    frc::SmartDashboard::PutNumber("Turn kIz", kIz);
+    frc::SmartDashboard::PutNumber("Turn kFF", kFF);
+
+    m_turnPIDController.SetP(frc::SmartDashboard::GetNumber("Turn P", kP));
+    m_turnPIDController.SetI(frc::SmartDashboard::GetNumber("Turn I", 0));
+    m_turnPIDController.SetD(frc::SmartDashboard::GetNumber("Turn D", 0));
+    //m_turnPIDController.SetIZone(frc::SmartDashboard::GetNumber("Turn kIz", 0));
+    //m_turnPIDController.SetFF(frc::SmartDashboard::GetNumber("Turn kFF", 0));
+    m_turnPIDController.SetOutputRange(-3.141519, 3.14159);
 }
 
 //for the following function we need to get the velocity of the drive encoder and the rotations of the turning motor
-frc::SwerveModuleState SwerveModule::GetState() const {
-  return {m_driveEncoder.GetVelocity(),frc::Rotation2d(units::radian_t(m_turningEncoder.GetPosition()))};
+frc::SwerveModuleState SwerveModule::GetState() {
+  return {units::meters_per_second_t{m_driveEncoder.GetVelocity()},frc::Rotation2d(units::radian_t(m_turningEncoder.GetPosition()))};
 }
 
 void SwerveModule::SetDesiredState(const frc::SwerveModuleState& state) {
   // Calculate the drive output from the drive PID controller.
-  const auto driveOutput = m_drivePIDController.setReference(state.speed.to<double>(), rev::ControlType::kVelocity);
-
-  const auto driveFeedforward = m_driveFeedforward.Calculate(state.speed);
 
   // Calculate the turning motor output from the turning PID controller.
-  const auto turnOutput = m_turningPIDController.Calculate(
-      units::radian_t(m_turningEncoder.GetPosition()), state.angle.Radians());
+  //const auto turnOutput = m_turnPIDController.Calculate(units::radian_t(m_turningEncoder.GetPosition()), state.angle.Radians());
 
-  const auto turnFeedforward = m_turnFeedforward.Calculate(
-      m_turningPIDController.GetSetpoint().velocity);
+  //const auto turnFeedforward = m_turnFeedforward.Calculate(m_turnPIDController.GetSetpoint().velocity);
+  auto angle = state.angle.Radians();
+  double doubleangle = angle.to<double>();
 
   // Set the motor outputs.
-  m_driveMotor.SetVoltage(units::volt_t{driveOutput} + driveFeedforward);
-  m_turningMotor.SetVoltage(units::volt_t{turnOutput} + turnFeedforward);
+  //m_driveMotor.EnableVoltageCompensation(double {units::volt_t{driveOutput} + driveFeedforward});//SetVoltage(units::volt_t{driveOutput} + driveFeedforward);
+  m_drivePIDController.SetReference(state.speed.to<double>() * 500, rev::ControlType::kVelocity);
+  frc::SmartDashboard::PutNumber("Drive Speed", state.speed.to<double>() * 500);
+  //get rotations of motor and multiply by radians to get double
+  m_turnPIDController.SetReference(doubleangle * 500, rev::ControlType::kPosition);
+  frc::SmartDashboard::PutNumber("Rotate Speed", doubleangle);
 }
