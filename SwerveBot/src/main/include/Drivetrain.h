@@ -12,7 +12,9 @@
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <wpi/math>
-
+#include <iostream>
+#include <AHRS.h>
+#include <frc/livewindow/LiveWindow.h>
 #include "SwerveModule.h"
 
 /**
@@ -20,14 +22,17 @@
  */
 class Drivetrain {
  public:
-  Drivetrain() { m_gyro.Reset(); }
+  NetworkTable *table;
+  frc::LiveWindow *lw = NULL;
+  AHRS *ahrs = new AHRS(frc::SPI::Port::kMXP);
+  Drivetrain() {  ahrs->ZeroYaw(); }
 
   /**
    * Get the robot angle as a Rotation2d.
    */
   frc::Rotation2d GetAngle() const {
     // Negating the angle because WPILib Gyros are CW positive.
-    return frc::Rotation2d(units::degree_t(-m_gyro.GetAngle()));
+    return frc::Rotation2d(units::degree_t(-ahrs->GetYaw()));
   }
 
   void Drive(units::meters_per_second_t xSpeed,
@@ -36,23 +41,22 @@ class Drivetrain {
   void UpdateOdometry();
 
   static constexpr units::meters_per_second_t kMaxSpeed =
-      3.0_mps;  // 3 meters per second
+      1.0_mps;  // 3 meters per second
   static constexpr units::radians_per_second_t kMaxAngularSpeed{
       wpi::math::pi};  // 1/2 rotation per second
 
  private:
-  frc::Translation2d m_frontLeftLocation{+0.381_m, +0.381_m};
-  frc::Translation2d m_frontRightLocation{+0.381_m, -0.381_m};
-  frc::Translation2d m_backLeftLocation{-0.381_m, +0.381_m};
-  frc::Translation2d m_backRightLocation{-0.381_m, -0.381_m};
+  frc::Translation2d m_frontLeftLocation{+0.305_m, +0.305_m};
+  frc::Translation2d m_frontRightLocation{+0.305_m, -0.305_m};
+  frc::Translation2d m_backLeftLocation{-0.305_m, +0.305_m};
+  frc::Translation2d m_backRightLocation{-0.305_m, -0.305_m};
 
   SwerveModule m_frontLeft{1, 2};
   SwerveModule m_frontRight{3, 4};
   SwerveModule m_backLeft{5, 6};
   SwerveModule m_backRight{7, 8};
 
-  frc::AnalogGyro m_gyro{0};
-
+ 
   frc::SwerveDriveKinematics<4> m_kinematics{
       m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
       m_backRightLocation};
