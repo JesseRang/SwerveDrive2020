@@ -6,10 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "Drivetrain.h"
+#include <frc/SmartDashboard/SmartDashboard.h>
+#include <stdio.h>
 
-void Drivetrain::Drive(units::meters_per_second_t xSpeed, units::meters_per_second_t ySpeed, units::radians_per_second_t rot, bool fieldRelative) 
+void Drivetrain::Drive(units::meters_per_second_t xSpeed, units::meters_per_second_t ySpeed, units::radians_per_second_t rot, bool fieldRelative)
 {
-  auto states = m_kinematics.ToSwerveModuleStates(fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(xSpeed, ySpeed, rot, GetAngle()): frc::ChassisSpeeds{xSpeed, ySpeed, rot});
+
+  auto states = m_kinematics.ToSwerveModuleStates(fieldRelative ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(xSpeed, ySpeed, rot, GetAngle()) : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
   m_kinematics.NormalizeWheelSpeeds(&states, kMaxSpeed);
 
@@ -19,9 +22,13 @@ void Drivetrain::Drive(units::meters_per_second_t xSpeed, units::meters_per_seco
   m_frontRight.SetDesiredState(fr);
   m_backLeft.SetDesiredState(bl);
   m_backRight.SetDesiredState(br);
+
+  frc::SmartDashboard::PutNumber("FLSetAngle", m_frontLeft.PrintSetAngle(fl));
+  frc::SmartDashboard::PutNumber("FLCurrentAngle", m_frontLeft.GetAngle());
 }
 
-void Drivetrain::UpdateOdometry() {
+void Drivetrain::UpdateOdometry()
+{
   m_odometry.Update(GetAngle(), m_frontLeft.GetState(), m_frontRight.GetState(),
                     m_backLeft.GetState(), m_backRight.GetState());
 }
